@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Car;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (){
+    $cars = Car::orderBy('created_at','DESC')->paginate(15);
+    return view ('cars.index',compact('cars'));
+
 });
+
+Route::resource('cars', CarController::class);
